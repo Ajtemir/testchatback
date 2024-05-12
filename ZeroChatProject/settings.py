@@ -77,12 +77,10 @@ ASGI_APPLICATION = "app.routing.application" #routing.py will handle the ASGI
 
 CHANNEL_LAYERS = {
     'default': {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [('localhost', 6379)]
+        'BACKEND': "channels.layers.InMemoryChannelLayer"
         }
     }
-}
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
