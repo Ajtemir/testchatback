@@ -1,6 +1,9 @@
+import datetime
 import json
 from asgiref.sync import async_to_sync
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.contrib.auth.models import User
 
 from app.models import Message
 
@@ -28,7 +31,8 @@ class TextRoomConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         text = text_data_json['text']
         sender = text_data_json['sender']
-
+        receiver = self.room_group_name.split('_')[1]
+        await self.create_new_comment(sender, receiver, text)
         # Send message to room group
         await self.channel_layer.group_send(
             self.room_group_name,
@@ -48,3 +52,16 @@ class TextRoomConsumer(AsyncWebsocketConsumer):
             'text': text,
             'sender': sender
         }))
+
+    @database_sync_to_async
+    def create_new_comment(self, sender, receiver, text):
+        print(sender, receiver, text)
+        user_from = User.objects.filter(username=sender).first()
+        user_to = User.objects.filter(username=receiver).first()
+        message = Message.objects.create(
+            message=text,
+            user_from=user_from,
+            user_to=user_to,
+            timestamp=datetime.datetime.now()
+        )
+        return message
