@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&#%rg6p9xh(=!hfz()a4-&vv7r_620ubhy+)zgo1=hz%v$zzb8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,13 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'app',
-    'channels'
+    'channels',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -54,7 +57,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ZeroChatProject.urls'
-
+CORS_ALLOW_ALL_ORIGINS = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
