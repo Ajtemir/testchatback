@@ -76,7 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ZeroChatProject.wsgi.application'
-ASGI_APPLICATION = "app.routing.application" #routing.py will handle the ASGI
+ASGI_APPLICATION = "ZeroChatProject.asgi.application" #routing.py will handle the ASGI
 
 CHANNEL_LAYERS = {
     'default': {
